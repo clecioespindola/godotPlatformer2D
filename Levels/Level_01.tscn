@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Terrain/5 - Sky_color.png" type="Texture" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Assets/Terrain/3 - Cloud_cover_1.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Terrain/4 - Cloud_cover_2.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/Fall-zone.gd" type="Script" id=8]
+[ext_resource path="res://Items/apple.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Items/banana.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -1045,4 +1047,30 @@ __meta__ = {
 
 [node name="collision" type="CollisionShape2D" parent="fall-zone"]
 shape = SubResource( 38 )
+
+[node name="fruits" type="Node2D" parent="."]
+
+[node name="banana" parent="fruits" instance=ExtResource( 10 )]
+position = Vector2( 128, 128 )
+
+[node name="banana2" parent="fruits" instance=ExtResource( 10 )]
+position = Vector2( 240, 112 )
+
+[node name="banana3" parent="fruits" instance=ExtResource( 10 )]
+position = Vector2( 288, 64 )
+
+[node name="banana4" parent="fruits" instance=ExtResource( 10 )]
+position = Vector2( 304, 64 )
+
+[node name="apple" parent="fruits" instance=ExtResource( 9 )]
+position = Vector2( 64, 128 )
+
+[node name="apple2" parent="fruits" instance=ExtResource( 9 )]
+position = Vector2( 80, 128 )
+
+[node name="apple3" parent="fruits" instance=ExtResource( 9 )]
+position = Vector2( 96, 128 )
+
+[node name="apple4" parent="fruits" instance=ExtResource( 9 )]
+position = Vector2( 112, 128 )
 [connection signal="body_entered" from="fall-zone" to="fall-zone" method="_on_fallzone_body_entered"]

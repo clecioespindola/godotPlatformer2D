@@ -35,7 +35,7 @@ func _check_is_ground():
 		if raycast.is_colliding():
 			return true
 	
-	return false		
+	return false
 
 func _set_animation():
 	var anim = "idle"
@@ -45,5 +45,5 @@ func _set_animation():
 	elif velocity.x != 0:
 		anim = "run"
 		
-	if $anim.assigned_animation	!= anim:
+	if $anim.assigned_animation != anim:
 		$anim.play(anim)
