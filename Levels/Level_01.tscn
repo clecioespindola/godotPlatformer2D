@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Terrain/5 - Sky_color.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/Terrain/2 - Hills.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Terrain/3 - Cloud_cover_1.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Terrain/4 - Cloud_cover_2.png" type="Texture" id=7]
+[ext_resource path="res://Scripts/Fall-zone.gd" type="Script" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -968,6 +969,9 @@ shader = SubResource( 36 )
 shader_param/Direction = Vector2( 1, 0 )
 shader_param/Speed = 0.02
 
+[sub_resource type="RectangleShape2D" id=38]
+extents = Vector2( 80, 10 )
+
 [node name="Level_01" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -1031,3 +1035,14 @@ position = Vector2( 0, -160 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 centered = false
+
+[node name="fall-zone" type="Area2D" parent="."]
+position = Vector2( 480, 304 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="collision" type="CollisionShape2D" parent="fall-zone"]
+shape = SubResource( 38 )
+[connection signal="body_entered" from="fall-zone" to="fall-zone" method="_on_fallzone_body_entered"]
