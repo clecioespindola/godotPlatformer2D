@@ -75,6 +75,9 @@ jump={
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Items"
 2d_physics/layer_4="World"
+2d_physics/layer_5="Traps"
+2d_physics/layer_6="Hurtboxes"
+2d_physics/layer_7="Hitboxes"
 
 [rendering]
 
