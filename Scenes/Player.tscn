@@ -214,7 +214,8 @@ collision_mask = 94
 script = ExtResource( 2 )
 
 [node name="texture" type="Sprite" parent="."]
-texture = ExtResource( 6 )
+texture = ExtResource( 1 )
+hframes = 11
 
 [node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -235,13 +236,13 @@ shape = SubResource( 6 )
 position = Vector2( -7, 10 )
 enabled = true
 cast_to = Vector2( 0, 12 )
-collision_mask = 72
+collision_mask = 88
 
 [node name="raycast2" type="RayCast2D" parent="raycasts"]
 position = Vector2( 8, 10 )
 enabled = true
 cast_to = Vector2( 0, 12 )
-collision_mask = 8
+collision_mask = 88
 
 [node name="camera" type="Camera2D" parent="."]
 current = true
