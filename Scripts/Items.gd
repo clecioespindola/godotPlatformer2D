@@ -1,7 +1,11 @@
 extends Area2D
 
-func _on_items_body_entered(body: Node) -> void:
+export var fruits = 1
+
+func _on_items_body_entered(_body: Node) -> void:
 	$anim.play("collected")
+	Global.fruits += fruits
+	print(Global.fruits)
 	
 func _on_anim_animation_finished(anim_name: String) -> void:
 	if anim_name == "collected":
