@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Fruits/Apple.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Fruits/Collected.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Items.gd" type="Script" id=3]
+[ext_resource path="res://Sounds/powerUp2.ogg" type="AudioStream" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 7.07107
@@ -104,5 +105,9 @@ autoplay = "motion"
 playback_speed = 1.5
 anims/collected = SubResource( 2 )
 anims/motion = SubResource( 3 )
+
+[node name="collectedFx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -15.0
 [connection signal="body_entered" from="." to="." method="_on_items_body_entered"]
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

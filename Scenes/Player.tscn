@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Assets/Player/Idle (32x32).png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=2]
@@ -6,9 +6,39 @@
 [ext_resource path="res://Assets/Player/Run (32x32).png" type="Texture" id=4]
 [ext_resource path="res://Assets/Player/Hit (32x32).png" type="Texture" id=5]
 [ext_resource path="res://Assets/Player/Fall (32x32).png" type="Texture" id=6]
+[ext_resource path="res://Assets/Effects/Dust Particle.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Effects/Shadow.png" type="Texture" id=8]
+[ext_resource path="res://Sounds/jump1.ogg" type="AudioStream" id=9]
 
-[sub_resource type="Animation" id=1]
-resource_name = "fall"
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.504808, 0.985577 )
+colors = PoolColorArray( 1, 1, 1, 0.415686, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.00546448, 0.445455 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 30.0
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 100.0
+linear_accel_random = 0.3
+scale_random = 0.5
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="Animation" id=6]
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("texture:texture")
 tracks/0/interp = 1
@@ -46,7 +76,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=7]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("texture:frame")
@@ -85,7 +115,7 @@ tracks/2/keys = {
 "values": [ 7 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=8]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("texture:frame")
@@ -124,7 +154,8 @@ tracks/2/keys = {
 "values": [ 11 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=9]
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("texture:frame")
 tracks/0/interp = 1
@@ -162,7 +193,7 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=10]
 length = 1.1
 loop = true
 tracks/0/type = "value"
@@ -202,33 +233,54 @@ tracks/2/keys = {
 "values": [ 12 ]
 }
 
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 9, 11.75 )
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 9, 10 )
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 12, 10 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 10, 2 )
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 0, -16 )
 collision_mask = 94
 script = ExtResource( 2 )
 
+[node name="steps_fx" type="Particles2D" parent="."]
+position = Vector2( 0, 16 )
+rotation = -3.14159
+scale = Vector2( 1, -1 )
+emitting = false
+amount = 10
+lifetime = 0.75
+one_shot = true
+speed_scale = 0.5
+explosiveness = 0.3
+randomness = 0.8
+process_material = SubResource( 5 )
+texture = ExtResource( 7 )
+
+[node name="Shadow" type="Sprite" parent="."]
+position = Vector2( 0, 16 )
+scale = Vector2( 1, 0.4375 )
+texture = ExtResource( 8 )
+
 [node name="texture" type="Sprite" parent="."]
-texture = ExtResource( 1 )
-hframes = 11
+texture = ExtResource( 4 )
+hframes = 12
 
 [node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/fall = SubResource( 1 )
-anims/hit = SubResource( 2 )
-anims/idle = SubResource( 3 )
-anims/jump = SubResource( 4 )
-anims/run = SubResource( 5 )
+anims/fall = SubResource( 6 )
+anims/hit = SubResource( 7 )
+anims/idle = SubResource( 8 )
+anims/jump = SubResource( 9 )
+anims/run = SubResource( 10 )
 
 [node name="collision" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( 0, 4 )
-shape = SubResource( 6 )
+position = Vector2( 0, 6 )
+shape = SubResource( 11 )
 
 [node name="raycasts" type="Node2D" parent="."]
 
@@ -260,9 +312,47 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="hurtbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 32
 collision_mask = 2
 
 [node name="collision" type="CollisionShape2D" parent="hurtbox"]
-shape = SubResource( 7 )
+shape = SubResource( 12 )
+
+[node name="left" type="RayCast2D" parent="."]
+visible = false
+position = Vector2( 0, 4 )
+enabled = true
+cast_to = Vector2( -16, 0 )
+collision_mask = 2
+
+[node name="right" type="RayCast2D" parent="."]
+visible = false
+position = Vector2( 0, 4 )
+enabled = true
+cast_to = Vector2( 16, 0 )
+collision_mask = 130
+
+[node name="headCollider" type="Area2D" parent="."]
+collision_mask = 16
+
+[node name="collision" type="CollisionShape2D" parent="headCollider"]
+position = Vector2( 0, -8 )
+shape = SubResource( 13 )
+
+[node name="jumpFx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+volume_db = -25.0
+
+[node name="pushRight" type="RayCast2D" parent="."]
+position = Vector2( 8, 4 )
+cast_to = Vector2( 2, 0 )
+collision_mask = 128
+
+[node name="pushLeft" type="RayCast2D" parent="."]
+position = Vector2( -8, 4 )
+cast_to = Vector2( -2, 0 )
+collision_mask = 128
+[connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_entered" from="headCollider" to="." method="_on_headCollider_body_entered"]

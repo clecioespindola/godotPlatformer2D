@@ -53,7 +53,7 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-minutes = 2
+minutes = 1
 
 [node name="icon" type="TextureRect" parent="HBoxContainer/Holder3"]
 margin_right = 32.0

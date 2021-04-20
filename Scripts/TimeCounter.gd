@@ -6,7 +6,7 @@ export (int) var seconds = 0
 func _process(_delta: float) -> void:
 	if minutes > 0 and seconds <=0:
 		minutes -= 1
-		seconds = 60
+		seconds = 59
 	
 	if seconds >= 10:
 		$seconds.set_text(":" + str(seconds))
@@ -20,7 +20,7 @@ func _process(_delta: float) -> void:
 		
 	if seconds <= 0:
 		$Timer.stop()
-		yield(get_tree().create_timer(1),"timeout")
+#		yield(get_tree().create_timer(1),"timeout")
 		get_tree().reload_current_scene()
 
 func _on_Timer_timeout() -> void:

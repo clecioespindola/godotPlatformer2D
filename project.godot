@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "enemyBase",
+"language": "GDScript",
+"path": "res://Scripts/EnemyBase.gd"
+} ]
 _global_script_class_icons={
-
+"enemyBase": ""
 }
 
 [application]
@@ -18,6 +23,10 @@ _global_script_class_icons={
 config/name="Plataforma 2d Tutorial"
 run/main_scene="res://Levels/Level_01.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://Scripts/Global.gd"
 
 [display]
 
@@ -78,6 +87,7 @@ jump={
 2d_physics/layer_5="Traps"
 2d_physics/layer_6="Hurtboxes"
 2d_physics/layer_7="Hitboxes"
+2d_physics/layer_8="Pushables"
 
 [rendering]
 
