@@ -8,7 +8,7 @@ var move_direction = -1
 var gravity = 1200
 var hitted = false
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	motion.x = speed * move_direction
 	
 	if move_direction == 1:

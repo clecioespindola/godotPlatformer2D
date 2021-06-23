@@ -21,7 +21,9 @@ func _process(_delta: float) -> void:
 	if seconds <= 0:
 		$Timer.stop()
 #		yield(get_tree().create_timer(1),"timeout")
-		get_tree().reload_current_scene()
+		if get_tree().reload_current_scene() != OK:
+			print("Algo deu errado!")
+		
 
 func _on_Timer_timeout() -> void:
 	seconds -= 1

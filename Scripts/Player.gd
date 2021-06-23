@@ -7,7 +7,7 @@ var gravity = 1200
 var jump_force = -720
 var is_grounded
 
-var player_health = 3
+#var player_health = 3
 var max_health = 3
 
 var hurted = false
@@ -27,7 +27,8 @@ func _ready() -> void:
 	Global.set("player", self)
 	connect("change_life", get_parent().get_node("HUD/HBoxContainer/Holder"), "on_change_life")
 	emit_signal("change_life", max_health)
-	self.position.x = Global.checkpoint_pos + 50
+	if Global.checkpoint_pos != null:
+		self.global_position.x = Global.checkpoint_pos
 
 		
 func _physics_process(delta: float) -> void:
@@ -43,7 +44,7 @@ func _physics_process(delta: float) -> void:
 		is_pushing = true
 	elif $pushLeft.is_colliding():
 		var object = $pushLeft.get_collider()
-		object.move_and_slide(Vector2(-30,0) * move_speed * delta)
+		object.move_and_slide(Vector2(-60,0) * move_speed * delta)
 		is_pushing = true
 	else:
 		is_pushing = false
@@ -51,6 +52,11 @@ func _physics_process(delta: float) -> void:
 	velocity = move_and_slide(velocity, UP)
 	
 	is_grounded = _check_is_ground()
+	
+	if is_grounded:
+		$Shadow.visible = true
+	else:
+		$Shadow.visible = false
 	
 	_set_animation()
 	
@@ -87,7 +93,6 @@ func _check_is_ground():
 	for raycast in raycasts.get_children():
 		if raycast.is_colliding():
 			return true
-	
 	return false
 
 func _set_animation():
@@ -99,7 +104,7 @@ func _set_animation():
 		anim = "run"
 		if is_grounded:
 			$steps_fx.set_emitting(true)
-		
+					
 	if velocity.y > 0 and !is_grounded:
 		anim = "fall"	
 	
@@ -119,36 +124,36 @@ func knockback():
 	velocity = move_and_slide(velocity)
 	
 func _on_hurtbox_body_entered(_body: Node) -> void:
-	player_health -= 1
-	hurted = true
-	emit_signal("change_life", player_health)
-	knockback()
-	get_node("hurtbox/collision").set_deferred("disabled", true)
-	yield(get_tree().create_timer(0.5), "timeout")
-	get_node("hurtbox/collision").set_deferred("disabled", false)
-	hurted = false
-	if player_health < 1:
-		queue_free()
-		get_tree().reload_current_scene()
+	playerDamage()
 		
 func hit_checkpoint():
-	Global.checkpoint_pos = position.x
-
+	Global.checkpoint_pos = global_position.x
 
 func _on_headCollider_body_entered(body: Node) -> void:
 	if body.has_method("destroy"):
 		body.destroy()
 
+func _on_hurtbox_area_entered(_area: Area2D) -> void:
+	playerDamage()
 
-func _on_hurtbox_area_entered(area: Area2D) -> void:
-	player_health -= 1
+func gameOver() -> void:
+	if Global.player_health < 1:
+		queue_free()
+		Global.is_dead = true
+		if get_tree().change_scene("res://Prefabs/GameOver.tscn") != OK:
+			print("Algo deu errado!")
+		
+func playerDamage():
+	Global.player_health -= 1
 	hurted = true
-	emit_signal("change_life", player_health)
+	emit_signal("change_life", Global.player_health)
 	knockback()
 	get_node("hurtbox/collision").set_deferred("disabled", true)
 	yield(get_tree().create_timer(0.5), "timeout")
 	get_node("hurtbox/collision").set_deferred("disabled", false)
 	hurted = false
-	if player_health < 1:
-		queue_free()
-		get_tree().reload_current_scene()
+	gameOver()
+
+
+func _on_Trigger_PlayerEntered() -> void:
+	$camera.current = false

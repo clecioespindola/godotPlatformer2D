@@ -18,20 +18,21 @@ colors = PoolColorArray( 1, 1, 1, 0.415686, 1, 1, 1, 1, 1, 1, 1, 0 )
 gradient = SubResource( 1 )
 
 [sub_resource type="Curve" id=3]
-_data = [ Vector2( 0.00546448, 0.445455 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.711364 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.556818 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=4]
 curve = SubResource( 3 )
 
 [sub_resource type="ParticlesMaterial" id=5]
 flag_disable_z = true
+direction = Vector3( 10, 0, 0 )
 spread = 0.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 30.0
 initial_velocity_random = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-linear_accel = 100.0
+linear_accel = 50.0
 linear_accel_random = 0.3
 scale_random = 0.5
 scale_curve = SubResource( 4 )
@@ -157,7 +158,7 @@ tracks/2/keys = {
 [sub_resource type="Animation" id=9]
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("texture:frame")
+tracks/0/path = NodePath("texture:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -166,10 +167,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 0 ]
+"values": [ ExtResource( 3 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("texture:texture")
+tracks/1/path = NodePath("texture:hframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -178,10 +179,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 3 ) ]
+"values": [ 1 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("texture:hframes")
+tracks/2/path = NodePath("texture:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -190,7 +191,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ 0 ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -253,22 +254,23 @@ rotation = -3.14159
 scale = Vector2( 1, -1 )
 emitting = false
 amount = 10
-lifetime = 0.75
+lifetime = 0.07
 one_shot = true
-speed_scale = 0.5
+speed_scale = 0.3
 explosiveness = 0.3
 randomness = 0.8
+local_coords = false
 process_material = SubResource( 5 )
 texture = ExtResource( 7 )
 
 [node name="Shadow" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0, 16 )
 scale = Vector2( 1, 0.4375 )
 texture = ExtResource( 8 )
 
 [node name="texture" type="Sprite" parent="."]
-texture = ExtResource( 4 )
-hframes = 12
+texture = ExtResource( 6 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -320,14 +322,12 @@ collision_mask = 2
 shape = SubResource( 12 )
 
 [node name="left" type="RayCast2D" parent="."]
-visible = false
 position = Vector2( 0, 4 )
 enabled = true
 cast_to = Vector2( -16, 0 )
 collision_mask = 2
 
 [node name="right" type="RayCast2D" parent="."]
-visible = false
 position = Vector2( 0, 4 )
 enabled = true
 cast_to = Vector2( 16, 0 )

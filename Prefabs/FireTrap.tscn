@@ -1,0 +1,131 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Traps/Fire/Off.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Traps/Fire/On (16x32).png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Fire-Trap.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=2]
+resource_name = "off"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "on"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 8.87656 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 4.0
+height = 4.0
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[node name="FireTrap" type="StaticBody2D"]
+collision_layer = 16
+
+[node name="Fire" type="Area2D" parent="."]
+collision_layer = 16
+script = ExtResource( 3 )
+
+[node name="texture" type="Sprite" parent="Fire"]
+position = Vector2( 0, -16 )
+texture = ExtResource( 2 )
+hframes = 3
+frame = 2
+
+[node name="anim" type="AnimationPlayer" parent="Fire"]
+autoplay = "off"
+anims/off = SubResource( 2 )
+anims/on = SubResource( 3 )
+
+[node name="FireCol" type="CollisionShape2D" parent="Fire"]
+position = Vector2( 0, -22 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="startTimer" type="Timer" parent="Fire"]
+wait_time = 3.0
+autostart = true
+
+[node name="stopTimer" type="Timer" parent="Fire"]
+wait_time = 6.0
+autostart = true
+
+[node name="TrapCol" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -8 )
+shape = SubResource( 1 )
+[connection signal="body_entered" from="Fire" to="Fire" method="_on_Fire_body_entered"]
+[connection signal="timeout" from="Fire/startTimer" to="Fire" method="_on_startTimer_timeout"]
+[connection signal="timeout" from="Fire/stopTimer" to="Fire" method="_on_stopTimer_timeout"]

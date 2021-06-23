@@ -1,0 +1,153 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Terrain/Terrain (16x16).png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 13, 107 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "active"
+tracks/0/type = "value"
+tracks/0/path = NodePath("col:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 109 ), Vector2( 0, -106 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 205 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "disabled"
+tracks/0/type = "value"
+tracks/0/path = NodePath("col:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 109 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 207 ) ]
+}
+
+[node name="ArenaDoor" type="StaticBody2D"]
+collision_layer = 8
+
+[node name="texture" type="Node2D" parent="."]
+position = Vector2( 0, 207 )
+
+[node name="top" type="Sprite" parent="texture"]
+position = Vector2( 0, -198 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 128, 16, 16 )
+
+[node name="middle" type="Sprite" parent="texture"]
+position = Vector2( 0, -24 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle2" type="Sprite" parent="texture"]
+position = Vector2( 0, -40 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle3" type="Sprite" parent="texture"]
+position = Vector2( 0, -56 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle4" type="Sprite" parent="texture"]
+position = Vector2( 0, -72 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle5" type="Sprite" parent="texture"]
+position = Vector2( 0, -88 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle6" type="Sprite" parent="texture"]
+position = Vector2( 0, -103 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle7" type="Sprite" parent="texture"]
+position = Vector2( 0, -119 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle8" type="Sprite" parent="texture"]
+position = Vector2( 0, -135 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle9" type="Sprite" parent="texture"]
+position = Vector2( 0, -150 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle10" type="Sprite" parent="texture"]
+position = Vector2( 0, -166 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle11" type="Sprite" parent="texture"]
+position = Vector2( 0, -182 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="bottom" type="Sprite" parent="texture"]
+position = Vector2( 0, -8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 160, 16, 16 )
+
+[node name="col" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 109 )
+shape = SubResource( 1 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+autoplay = "disabled"
+anims/active = SubResource( 2 )
+anims/disabled = SubResource( 3 )
