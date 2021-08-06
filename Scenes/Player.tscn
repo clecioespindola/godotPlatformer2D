@@ -281,6 +281,7 @@ anims/jump = SubResource( 9 )
 anims/run = SubResource( 10 )
 
 [node name="collision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 6 )
 shape = SubResource( 11 )
 
@@ -314,7 +315,6 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="hurtbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 32
 collision_mask = 2
 
@@ -334,6 +334,7 @@ cast_to = Vector2( 16, 0 )
 collision_mask = 130
 
 [node name="headCollider" type="Area2D" parent="."]
+visible = false
 collision_mask = 16
 
 [node name="collision" type="CollisionShape2D" parent="headCollider"]

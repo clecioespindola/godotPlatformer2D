@@ -157,3 +157,7 @@ func playerDamage():
 
 func _on_Trigger_PlayerEntered() -> void:
 	$camera.current = false
+
+
+func _on_Boss_BossDead() -> void:
+	$camera.current = true

@@ -17,9 +17,7 @@ func _physics_process(_delta: float) -> void:
 		$texture.flip_h = false
 	
 	motion = move_and_slide(motion)
-	
-#	_set_animation()
-	
+		
 func apply_gravity(delta):
 	motion.y += gravity * delta
 
@@ -53,8 +51,11 @@ func _on_hitbox_body_entered(body: Node) -> void:
 	hitted = false
 	if health < 1:
 		get_node("hitbox/collision").set_deferred("disabled", true)
-		set_physics_process(false)
-		get_node("collision").set_deferred("disabled", true)
-		yield(get_tree().create_timer(.7), "timeout")
-		queue_free()
-		
+		if body.name == "Boss":
+			set_physics_process(false)
+			get_node("collision").set_deferred("disabled", true)
+			yield(get_tree().create_timer(.7), "timeout")
+			queue_free()
+		else:
+			yield(get_tree().create_timer(.2), "timeout")
+			queue_free()
